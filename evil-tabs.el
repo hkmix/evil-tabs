@@ -38,6 +38,12 @@
   (interactive "<!>")
   (evil-tabs--quit))
 
+(evil-define-command evil-tabs-sensitive-save-modified-and-quit (file &optional bang)
+  :repeat nil
+  (interactive "<f><!>")
+  (evil-write nil nil nil file bang)
+  (evil-tabs--quit))
+
 (evil-define-command evil-tabs-current-buffer-to-tab ()
   (let ((nwindows (length (window-list)))
         (cb (current-buffer)))
@@ -64,6 +70,8 @@
 (evil-ex-define-cmd "tabs[elect]" 'elscreen-select-and-goto)
 (evil-ex-define-cmd "tabw[ith]" 'elscreen-find-and-goto-by-buffer)
 (evil-ex-define-cmd "q[uit]" 'evil-tab-sensitive-quit)
+(evil-ex-define-cmd "x[it]" 'evil-tabs-save-modified-and-quit)
+(evil-ex-define-cmd "exi[t]" 'evil-tabs-save-modified-and-quit)
 
 (evil-define-key 'normal evil-tabs-mode-map
   "gt" 'elscreen-next
