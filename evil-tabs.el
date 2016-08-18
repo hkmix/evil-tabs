@@ -21,6 +21,14 @@
 (defvar evil-tabs-mode-map (make-sparse-keymap)
   "Evil-tabs-mode's keymap.")
 
+(evil-define-command evil-tabs--quit (&optional bang)
+  (if (and (one-window-p) (not (elscreen-one-screen-p)))
+    ;; 1. If there is one split and more than one screen, use elscreen-kill.
+    (elscreen-kill)
+    ;; 2. Otherwise, use evil-quit (i.e.: multiple splits, one screen; one split,
+    ;; one screen).
+    (evil-quit bang)))
+
 (evil-define-command evil-tabs-tabedit (file)
   (interactive "<f>")
   (elscreen-find-file file))
@@ -28,9 +36,7 @@
 (evil-define-command evil-tab-sensitive-quit (&optional bang)
   :repeat nil
   (interactive "<!>")
-  (if (> (length (elscreen-get-screen-list)) 1)
-    (elscreen-kill)
-    (evil-quit bang)))
+  (evil-tabs--quit))
 
 (evil-define-command evil-tabs-current-buffer-to-tab ()
   (let ((nwindows (length (window-list)))
