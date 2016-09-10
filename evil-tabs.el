@@ -25,7 +25,7 @@
   (if (and (one-window-p) (not (elscreen-one-screen-p)))
     ;; 1. If there is one split and more than one screen, use elscreen-kill.
     (elscreen-kill)
-    ;; 2. Otherwise, use evil-quit (i.e.: multiple splits, one screen; one split,
+    ;; 2. Otherwise, use evil-quit (i.e. multiple splits, one screen; one split,
     ;; one screen).
     (evil-quit bang)))
 
